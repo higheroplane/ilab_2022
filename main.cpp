@@ -6,7 +6,7 @@ int main()
     printf ("Please enter your name:\n");
     scanf ("%s", name);
 
-    char surname [20] = "";
+    char surname [25] = "";
     printf ("Please enter your surname:\n");
     scanf ("%s", surname);
 
