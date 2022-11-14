@@ -1,54 +1,48 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "stack.h"
 
-int square (int x); // square : \Z \to \Z
-int plus_5 (int x);
-int cube   (int x);
 
-int value_in_4 (int (*f) (int));
+int main ()
+{
+    my_stack stk;
+    constructor (&stk, 10);
 
-void * square_or_cube (int x);
+    push (&stk, 'k');
+    stk.data [stk.size++] = 'k';
 
-int main()
+    printf ("%c\n", stk.data[1]);
+
+    stack_check (&stk);
+
+    return 0;
+}
+
+
+int old_main()
 {
 
-    int (**f) (int x) = (int (**) (int)) calloc (3, sizeof (void*));
+    int a1 [5] = {};
+    my_stack stk;
+    int a3 [10] = {};
 
-    f[0] = square;
-    f[1] = plus_5;
-    f[2] = cube;
+    constructor (&stk, 10);
 
-    for (int i = 0; i < 3; i++)
+    printf ("can_1 = %x\n", stk.canary_1);
+
+    for (int i = 0; i < 5; i ++)
     {
-        printf ("%d\n", value_in_4(f[i]));
+        printf ("a1 [%d] = %d\n", i, a1[i]);
     }
+
+    printf ("\n\n");
+
+    for (int i = 0; i < 7; i ++)
+    {
+        a1[i] = i;
+    }
+
+    printf ("can_1 = %x\n", stk.canary_1);
+
+
     
     return 0;
 } 
-
-int square (int x)
-{
-    return x*x;
-}
-
-int plus_5 (int x)
-{
-    return x + 5;
-}
-
-int cube (int x)
-{
-    return x*x*x;
-}
-
-int value_in_4 (int (*f) (int))
-{
-    return f(4);
-}
-
-void * square_or_cube(int x)
-{
-    if (x == 2) return (void*) square;
-    else if (x == 3) return (void*) cube;
-    else return (void*) plus_5;
-}
